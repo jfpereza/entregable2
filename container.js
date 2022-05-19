@@ -32,13 +32,21 @@ class Contenedor {
         if(l < 1) return 0
         return this.data[this.data.length - 1].id
     }
-    save(obj) {
+    
+     async save(obj) {
         const id = this.getLastID()
         this.data.push({
             ...obj, ...{id:id + 1}
         })
         this.write()
+        try{
+            await fs.promises.writeFile('./file2.json');
+            return console.log("registrado");
+        } catch{
+            return console.log("no registrado"); 
+        }
     }
+    
     getByID(id) {
         return this.data.find(p => p.id == id)
     }
